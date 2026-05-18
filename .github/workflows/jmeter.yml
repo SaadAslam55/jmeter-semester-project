@@ -23,9 +23,12 @@ jobs:
     - name: Run Performance Tests
       run: |
         mkdir -p results reports
-        # Is line se agar koi local error hoga toh pata chal jayega
+        # Yeh command poori repo se aapki .jmx file khud dhoond legi, chahye woh kisi bhi folder mein ho!
+        JMX_FILE=$(find . -name "*.jmx" | head -n 1)
+        echo "Found JMX File: $JMX_FILE"
+        
         jmeter/bin/jmeter -n \
-          -t tests/load_test.jmx \
+          -t "$JMX_FILE" \
           -l results/results.jtl \
           -e -o reports/
 
